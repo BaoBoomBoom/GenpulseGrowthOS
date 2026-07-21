@@ -10,6 +10,22 @@ AMOS + SAOS operating system for Genpulse / Lushair content, review, and sales.
 | `sql/` | Postgres schemas (Phase 1 content loop + Phase 0 review/sales + Sales Tracking deals) |
 | `docs/` | PRDs (Phase 1 MVP, AMOS+SAOS) |
 
+## Deploy on Vercel
+
+The Vite app lives in **`web/`** (repo root has no `package.json`).
+
+In the Vercel project:
+
+1. **Root Directory** ? `web`
+2. Framework Preset ? Vite (auto)
+3. Build Command ? `npm run build`
+4. Output Directory ? `dist`
+5. If the GitHub repo is **private**, grant Vercel access to `BaoBoomBoom/GenpulseGrowthOS`
+
+A root `vercel.json` is also present so default imports without Root Directory still build from `web/`.
+
+SPA routes are rewritten to `index.html` via `web/vercel.json`.
+
 ## Quick start (UI)
 
 ```bash
@@ -33,10 +49,10 @@ See `sql/README.md` for details.
 
 ## Product surfaces
 
-- **Content** ó database + calendar
-- **Agents** ó Scientist / Creative Director / Growth Manager
-- **Review** ó hard publish gate (`health_claim_flag`, approve before publish)
-- **Sales** ó deal CRM aligned to Sales Tracking sheet (pipeline + editable fields)
-- **Brands** ó brand matrix + platform strategy / weekly frequency
+- **Content** ù database + calendar
+- **Agents** ù Scientist / Creative Director / Growth Manager
+- **Review** ù hard publish gate (`health_claim_flag`, approve before publish)
+- **Sales** ù deal CRM aligned to Sales Tracking sheet (pipeline + editable fields)
+- **Brands** ù brand matrix + platform strategy / weekly frequency
 
 Human-in-the-loop: no auto-publish, no auto-send outreach.

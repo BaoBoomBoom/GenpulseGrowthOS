@@ -78,7 +78,7 @@ function generatePlatformCopy(
       hook,
       talking_points: claims.length ? claims : [topic.core_angle],
       narrator_notes: `Tone: ${brandTone}. ${contentLang || ""}`.trim(),
-      caption: `${topic.title} ù ${topic.cta_type}`,
+      caption: `${topic.title} ‚Äî ${topic.cta_type}`,
       on_screen_text: [hook.slice(0, 24), topic.brand, "CTA"],
     };
   }
@@ -97,7 +97,7 @@ function generatePlatformCopy(
       references_line: knowledge
         .filter((k) => k.type === "research")
         .map((k) => k.title)
-        .join(" ù "),
+        .join(" ‚Äî "),
     };
   }
   if (platform === "Pinterest") {
@@ -121,7 +121,7 @@ const TOPIC_BANK: Omit<
   "topic_id" | "status" | "week_key" | "priority_score" | "evidence_score"
 >[] = [
   {
-    title: "Magnesium vs melatonin ù wrong sleep problem?",
+    title: "Magnesium vs melatonin ‚Äî wrong sleep problem?",
     core_angle: "Compare mechanisms without hype; route to personalization.",
     objective: "app downloads",
     brand: "Genpulse",
@@ -151,7 +151,7 @@ const TOPIC_BANK: Omit<
     funnel: "TOFU",
   },
   {
-    title: "Hair shed after your period ù not shampoo betrayal",
+    title: "Hair shed after your period ‚Äî not shampoo betrayal",
     core_angle: "Cycle-linked telogen timing for Lushair.",
     objective: "Sales",
     brand: "Lushair",
@@ -208,15 +208,15 @@ function agentReply(agent: AgentId, userText: string): string {
     if (t.includes("brief") || t.includes("brand")) {
       return "I lock brand personality first, then choose format and platform expression. Same topic, different stage direction per account.";
     }
-    return "I am style and expression ù tone, format, visual language, and multi-platform rewrites. Not a caption dump.";
+    return "I am style and expression ‚Äî tone, format, visual language, and multi-platform rewrites. Not a caption dump.";
   }
   if (t.includes("allocat") || t.includes("week") || t.includes("next")) {
-    return "Next-week allocation should overweight CEO TikTok dating-biology and Genpulse sleep-signal threads ù they complete the download?upload loop.";
+    return "Next-week allocation should overweight CEO TikTok dating-biology and Genpulse sleep-signal threads ‚Äî they complete the download?upload loop.";
   }
   if (t.includes("anomal")) {
     return "Anomaly: Lushair peptide posts get saves but weak Hair Scan CTR. Soften CTA ladder.";
   }
-  return "I attribute business outcomes, spot trends/anomalies, and allocate next-week content capacity. Dashboards are inputs ù decisions are the job.";
+  return "I attribute business outcomes, spot trends/anomalies, and allocate next-week content capacity. Dashboards are inputs ‚Äî decisions are the job.";
 }
 
 const initialMessages: Record<AgentId, AgentMessage[]> = {
@@ -225,7 +225,7 @@ const initialMessages: Record<AgentId, AgentMessage[]> = {
       id: "m-s0",
       agent: "scientist",
       role: "agent",
-      text: "AI Scientist online. I guard truth and credibility ù evidence extraction, controversy/risk flags, content-language translation, evidence scores.",
+      text: "AI Scientist online. I guard truth and credibility ‚Äî evidence extraction, controversy/risk flags, content-language translation, evidence scores.",
       created_at: nowIso(),
     },
   ],
@@ -243,7 +243,7 @@ const initialMessages: Record<AgentId, AgentMessage[]> = {
       id: "m-g0",
       agent: "growth",
       role: "agent",
-      text: "AI Growth Manager online. I attribute, detect anomalies, recommend, and allocate next-week resources against downloads / uploads / scans ù not vanity views.",
+      text: "AI Growth Manager online. I attribute, detect anomalies, recommend, and allocate next-week resources against downloads / uploads / scans ‚Äî not vanity views.",
       created_at: nowIso(),
     },
   ],
@@ -327,7 +327,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           ),
           status: "draft" as const,
           creative_direction: brand
-            ? `${brand.tone} ù format ${topic.format_hint}`
+            ? `${brand.tone} ‚Äî format ${topic.format_hint}`
             : topic.format_hint,
           visual_notes: brand?.prompt_beginning.slice(0, 120),
         };
@@ -410,7 +410,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           evidence_score: score,
           controversy:
             score < 70
-              ? "Evidence base incomplete ù treat claims as provisional."
+              ? "Evidence base incomplete ‚Äî treat claims as provisional."
               : undefined,
           risk_flags:
             score < 75
@@ -472,18 +472,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           brand: b.id,
           format: topic.format_hint || "short video",
           angle: topic.core_angle,
-          visual_language: `${b.tone} ù ${b.prompt_beginning.slice(0, 80)}`,
+          visual_language: `${b.tone} ‚Äî ${b.prompt_beginning.slice(0, 80)}`,
           platform_plays: Object.fromEntries(
             topic.platform.map((p) => [
               p,
               p === "TikTok"
-                ? "Hook-first ù 3 beats ù soft CTA"
+                ? "Hook-first ‚Äî 3 beats ‚Äî soft CTA"
                 : p === "Instagram"
-                  ? "Cover headline ù 5-6 slides ù aesthetic lock"
+                  ? "Cover headline ‚Äî 5-6 slides ‚Äî aesthetic lock"
                   : p === "X"
-                    ? "Thread ladder ù evidence line ù CTA"
+                    ? "Thread ladder ‚Äî evidence line ‚Äî CTA"
                     : p === "LinkedIn"
-                      ? "Insight open ù structured body ù founder close"
+                      ? "Insight open ‚Äî structured body ‚Äî founder close"
                       : `${p} native expression`,
             ])
           ),
@@ -557,7 +557,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           type: "allocation",
           title: `W31 allocation plan`,
           detail:
-            "CEO TikTok x6 (dating-biology) ù Genpulse X/TikTok x8 (sleep signals + upload CTA) ù Lushair IG/TT x5 (cycle-shed education ? Hair Scan) ù Finegyno TT x4 ù pause Dental until voice pack QA.",
+            "CEO TikTok x6 (dating-biology) ‚Äî Genpulse X/TikTok x8 (sleep signals + upload CTA) ‚Äî Lushair IG/TT x5 (cycle-shed education ? Hair Scan) ‚Äî Finegyno TT x4 ‚Äî pause Dental until voice pack QA.",
           impact: "high",
         };
         setGrowthInsights((prev) => [allocation, ...prev]);
@@ -831,7 +831,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           prev.map((t) => {
             if (t.task_id !== taskId) return t;
             if (t.status !== "approved" && t.status !== "scheduled") {
-              // hard gate ù ignore illegal publish
+              // hard gate ‚Äî ignore illegal publish
               return t;
             }
             if (!t.reviewed_at) return t;
@@ -883,8 +883,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const company = companies.find((c) => c.company_id === lead.company_id);
         const isSalon = lead.icp_type === "salon_clinic";
         const body = isSalon
-          ? `Hi ${lead.full_name.split(" ")[0]} ù saw ${company?.name || "your salon"} investing in retention. Genpulse/Lushair can pair Hair Scan hardware with CRM tracking for client data continuity. Draft only ù human must approve send.`
-          : `Hi ${lead.full_name.split(" ")[0]} ù researching ${company?.name || "your team"} against our ${lead.icp_type} ICP. Happy to share white-label / API options. Draft only ù human must approve send.`;
+          ? `Hi ${lead.full_name.split(" ")[0]} ‚Äî saw ${company?.name || "your salon"} investing in retention. Genpulse/Lushair can pair Hair Scan hardware with CRM tracking for client data continuity. Draft only ‚Äî human must approve send.`
+          : `Hi ${lead.full_name.split(" ")[0]} ‚Äî researching ${company?.name || "your team"} against our ${lead.icp_type} ICP. Happy to share white-label / API options. Draft only ‚Äî human must approve send.`;
         const act: Activity = {
           activity_id: uid("act"),
           lead_id: leadId,
