@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm install --include=dev --no-fund --no-audit",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"

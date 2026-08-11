@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "npm install",
-  "buildCommand": "npm run build",
+  "installCommand": "npm install && NPM_CONFIG_PRODUCTION=false npm install --prefix web --include=dev && npm install --prefix server",
+  "buildCommand": "NPM_CONFIG_PRODUCTION=false npm install --prefix web --include=dev && npm run build --prefix web",
   "outputDirectory": "web/dist",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

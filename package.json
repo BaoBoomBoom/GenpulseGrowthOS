@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "npm install --prefix web --include=dev && npm install --prefix server --include=dev",
+    "postinstall": "NPM_CONFIG_PRODUCTION=false npm install --prefix web --include=dev && npm install --prefix server --include=dev",
     "dev": "npm run dev --prefix web",
     "dev:api": "npm run start --prefix server",
     "dev:all": "node scripts/dev-all.mjs",
-    "build": "npm install --prefix web --include=dev && npm run build --prefix web",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix web --include=dev && npm run build --prefix web",
     "start:api": "npm run start --prefix server"
   },
   "dependencies": {
