@@ -406,8 +406,8 @@ export function SalesPage() {
 
       {tab === "table" ? (
         <div className="split sales-split">
-          <div className="panel" style={{ overflow: "auto" }}>
-            <div className="panel-body" style={{ padding: 0 }}>
+          <div className="panel sales-table-panel">
+            <div className="panel-body sales-table-wrap">
               <table className="table sales-table">
                 <thead>
                   <tr>
@@ -611,7 +611,7 @@ function DealDetail({
 }) {
   if (!deal) {
     return (
-      <div className="panel">
+      <div className="panel deal-detail sticky-form">
         <div className="panel-body empty">Select a deal</div>
       </div>
     );
@@ -625,8 +625,10 @@ function DealDetail({
   }
 
   return (
-    <div className={`panel deal-detail ${locked ? "deal-locked" : ""}`}>
-      <div className="panel-head">
+    <div
+      className={`panel deal-detail sticky-form ${locked ? "deal-locked" : ""}`}
+    >
+      <div className="panel-head deal-detail-head">
         <div>
           <h2>{deal.title || "Untitled"}</h2>
           <div className="chip-row" style={{ marginTop: 6 }}>

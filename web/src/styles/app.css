@@ -1398,7 +1398,7 @@ a {
   }
 }
 
-/* Sales Tracking — pipeline */
+/* Sales Tracking - pipeline */
 .sales-filters {
   display: flex;
   flex-wrap: wrap;
@@ -1535,8 +1535,28 @@ a {
   border-color: #efd9a8;
 }
 
+.sales-table-panel {
+  min-width: 0;
+}
+
+.sales-table-wrap {
+  padding: 0;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
 .sales-table {
   font-size: 0.82rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.sales-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
+  box-shadow: 0 1px 0 var(--line);
 }
 
 .sales-table tbody tr {
@@ -1545,6 +1565,18 @@ a {
 
 .sales-table tr.row-active td {
   background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+}
+
+.deal-detail.sticky-form {
+  align-self: start;
+  z-index: 3;
+}
+
+.deal-detail-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
 }
 
 .deal-detail-grid {
