@@ -415,12 +415,12 @@ export function SalesPage() {
                     <th>Value</th>
                     <th>Organization</th>
                     <th>Contact</th>
-                    <th>联系方式</th>
-                    <th>所在城市</th>
-                    <th>地址</th>
-                    <th>最近一次联系</th>
-                    <th>推荐阻碍</th>
-                    <th>预计可沟通时间</th>
+                    <th>Contact info</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Last contacted</th>
+                    <th>Recommendation blocker</th>
+                    <th>Expected talk time</th>
                     <th>Owner</th>
                     <th>Status</th>
                     <th>Stage</th>
@@ -699,7 +699,7 @@ function DealDetail({
             </select>
           </label>
           <label className="span-2">
-            联系方式
+            Contact info
             <input
               disabled={locked}
               value={deal.contact_info || ""}
@@ -710,7 +710,7 @@ function DealDetail({
             />
           </label>
           <label>
-            所在城市
+            City
             <input
               disabled={locked}
               value={deal.city || ""}
@@ -719,7 +719,7 @@ function DealDetail({
             />
           </label>
           <label>
-            最近一次联系
+            Last contacted
             <input
               disabled={locked}
               type="date"
@@ -730,7 +730,7 @@ function DealDetail({
             />
           </label>
           <label className="span-2">
-            地址
+            Address
             <input
               disabled={locked}
               value={deal.address || ""}
@@ -739,7 +739,7 @@ function DealDetail({
             />
           </label>
           <label className="span-2">
-            推荐阻碍
+            Recommendation blocker
             <input
               disabled={locked}
               value={deal.recommendation_blocker || ""}
@@ -750,7 +750,7 @@ function DealDetail({
             />
           </label>
           <label className="span-2">
-            预计可沟通时间
+            Expected talk time
             <input
               disabled={locked}
               value={deal.expected_talk_at || ""}
