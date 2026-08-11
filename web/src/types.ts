@@ -22,6 +22,39 @@ export type Platform =
   | "LinkedIn"
   | "Pinterest"
   | "Newsletter";
+
+/**
+ * OS-wide content publish / repurpose order.
+ * Same theme ships in this sequence unless a brand overrides via Brand Matrix.
+ */
+export const PUBLISH_PLATFORM_ORDER: Platform[] = [
+  "TikTok",
+  "Instagram",
+  "X",
+  "LinkedIn",
+  "Pinterest",
+  "Newsletter",
+];
+
+export const PUBLISH_PLATFORM_ROLE: Record<Platform, string> = {
+  TikTok: "????? · ??",
+  Instagram: "???? · ??",
+  X: "???? · ????",
+  LinkedIn: "???? · B2B",
+  Pinterest: "???? · ??",
+  Newsletter: "???? · ??",
+};
+
+export function publishOrderRank(platform: Platform): number {
+  const i = PUBLISH_PLATFORM_ORDER.indexOf(platform);
+  return i < 0 ? 99 : i + 1;
+}
+
+export function sortPlatformsByPublishOrder(platforms: Platform[]): Platform[] {
+  return [...platforms].sort(
+    (a, b) => publishOrderRank(a) - publishOrderRank(b)
+  );
+}
 export type ContentType =
   | "video"
   | "carousel"

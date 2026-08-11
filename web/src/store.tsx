@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { brandProfiles, platformPlans } from "./data/brands";
 import {
   contentSeed,
@@ -24,16 +24,27 @@ import type {
   Activity,
   ContentAsset,
   ContentDatabaseEntry,
+  ContentTask,
   CreativeBrief,
   CalendarSlot,
   Deal,
   GrowthInsight,
   KnowledgeItem,
+  Lead,
   Platform,
   Topic,
 } from "./types";
 import { PLATFORM_TYPE, TRACKING_BASE } from "./types";
 import { StoreContext, type Store } from "./store-context";
+import {
+  checkBackend,
+  loadStateFromBackend,
+  loadStateFromLocal,
+  pickPersistable,
+  saveStateToBackend,
+  saveStateToLocal,
+  type SaveStatus,
+} from "./lib/persist";
 
 function uid(prefix: string) {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
@@ -270,6 +281,136 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     "c-sleep-tiktok"
   );
   const weekKey = "2026-W30";
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("loading");
+  const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
+  const [backendOnline, setBackendOnline] = useState(false);
+  const [storageBackend, setStorageBackend] = useState<string | null>(null);
+  const hydratedRef = useRef(false);
+  const skipNextSaveRef = useRef(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setSaveStatus("loading");
+      const health = await checkBackend();
+      if (cancelled) return;
+      setBackendOnline(health.online);
+      setStorageBackend(health.storage ?? null);
+
+      let loaded = null as Awaited<ReturnType<typeof loadStateFromBackend>> | null;
+      if (health.online) {
+        try {
+          loaded = await loadStateFromBackend();
+        } catch {
+          // fall through to local
+        }
+      }
+      if (!loaded) loaded = loadStateFromLocal();
+
+      if (cancelled) return;
+      if (loaded) {
+        if (Array.isArray(loaded.knowledge)) setKnowledge(loaded.knowledge as KnowledgeItem[]);
+        if (Array.isArray(loaded.topics)) setTopics(loaded.topics as Topic[]);
+        if (Array.isArray(loaded.content)) setContent(loaded.content as ContentAsset[]);
+        if (Array.isArray(loaded.growthInsights))
+          setGrowthInsights(loaded.growthInsights as GrowthInsight[]);
+        if (Array.isArray(loaded.creativeBriefs))
+          setCreativeBriefs(loaded.creativeBriefs as CreativeBrief[]);
+        if (Array.isArray(loaded.databaseEntries))
+          setDatabaseEntries(loaded.databaseEntries as ContentDatabaseEntry[]);
+        if (Array.isArray(loaded.calendarSlots))
+          setCalendarSlots(loaded.calendarSlots as CalendarSlot[]);
+        if (Array.isArray(loaded.contentTasks))
+          setContentTasks(loaded.contentTasks as ContentTask[]);
+        if (Array.isArray(loaded.leads)) setLeads(loaded.leads as Lead[]);
+        if (Array.isArray(loaded.deals)) setDeals(loaded.deals as Deal[]);
+        if (Array.isArray(loaded.activities))
+          setActivities(loaded.activities as Activity[]);
+        if (loaded.agentMessages && typeof loaded.agentMessages === "object") {
+          setAgentMessages(loaded.agentMessages as Record<AgentId, AgentMessage[]>);
+        }
+        if (typeof loaded.activeContentId === "string" || loaded.activeContentId === null) {
+          setActiveContentId(loaded.activeContentId as string | null);
+        }
+        if (loaded.updated_at) setLastSavedAt(loaded.updated_at);
+      }
+
+      hydratedRef.current = true;
+      skipNextSaveRef.current = true;
+      setSaveStatus(health.online ? "saved" : "offline");
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const buildSnapshot = () =>
+    pickPersistable({
+      knowledge,
+      topics,
+      content,
+      growthInsights,
+      creativeBriefs,
+      databaseEntries,
+      calendarSlots,
+      contentTasks,
+      leads,
+      deals,
+      activities,
+      agentMessages,
+      activeContentId,
+    });
+
+  async function persistNow(markOfflineOnFail = true): Promise<boolean> {
+    const snapshot = buildSnapshot();
+    saveStateToLocal(snapshot);
+    const health = await checkBackend();
+    setBackendOnline(health.online);
+    setStorageBackend(health.storage ?? null);
+    if (!health.online) {
+      setSaveStatus("offline");
+      setLastSavedAt(new Date().toISOString());
+      return markOfflineOnFail ? false : true;
+    }
+    setSaveStatus("saving");
+    try {
+      const { updated_at } = await saveStateToBackend(snapshot);
+      setLastSavedAt(updated_at);
+      setSaveStatus("saved");
+      return true;
+    } catch {
+      setSaveStatus("error");
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    if (skipNextSaveRef.current) {
+      skipNextSaveRef.current = false;
+      return;
+    }
+    setSaveStatus((s) => (s === "loading" ? s : "dirty"));
+    const t = window.setTimeout(() => {
+      void persistNow();
+    }, 700);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    knowledge,
+    topics,
+    content,
+    growthInsights,
+    creativeBriefs,
+    databaseEntries,
+    calendarSlots,
+    contentTasks,
+    leads,
+    deals,
+    activities,
+    agentMessages,
+    activeContentId,
+  ]);
 
   const value = useMemo<Store>(() => {
     const filteredTopics =
@@ -903,6 +1044,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         );
         return act;
       },
+      saveStatus,
+      lastSavedAt,
+      backendOnline,
+      storageBackend,
+      async saveNow() {
+        return persistNow(false);
+      },
 
     };
   }, [
@@ -922,6 +1070,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     brandFilter,
     activeContentId,
     weekKey,
+    saveStatus,
+    lastSavedAt,
+    backendOnline,
+    storageBackend,
   ]);
 
   return (

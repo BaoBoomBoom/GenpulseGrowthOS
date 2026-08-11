@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useStore } from "../store-context";
 import type { BrandId } from "../types";
+import { SaveBar } from "./SaveBar";
 
 const links = [
   { to: "/", label: "Home", end: true },
@@ -75,19 +76,22 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
       <div className="main">
         <div className="topbar">
-          <div className="topbar-hint">Brand filter</div>
-          <div className="brand-filter" aria-label="Brand filter">
-            {brandOptions.map((b) => (
-              <button
-                key={b}
-                type="button"
-                className={`chip ${brandFilter === b ? "active" : ""}`}
-                onClick={() => setBrandFilter(b)}
-              >
-                {b}
-              </button>
-            ))}
+          <div>
+            <div className="topbar-hint">Brand filter</div>
+            <div className="brand-filter" aria-label="Brand filter">
+              {brandOptions.map((b) => (
+                <button
+                  key={b}
+                  type="button"
+                  className={`chip ${brandFilter === b ? "active" : ""}`}
+                  onClick={() => setBrandFilter(b)}
+                >
+                  {b}
+                </button>
+              ))}
+            </div>
           </div>
+          <SaveBar />
         </div>
         {children}
       </div>

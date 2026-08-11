@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { WeeklyFrequencyStats } from "../components/WeeklyFrequencyStats";
+import { PublishPlatformOrder } from "../components/PublishPlatformOrder";
 import { useStore } from "../store-context";
 
 export function CommandPage() {
@@ -26,7 +27,7 @@ export function CommandPage() {
           <h1 className="page-title">What should we ship this week?</h1>
           <p className="page-desc">
             Start in Content Database, let agents sharpen science / creative / growth,
-            then lock posts on the Calendar.
+            then lock posts on the Calendar — publish in platform order.
           </p>
         </div>
         <div className="header-actions">
@@ -44,6 +45,10 @@ export function CommandPage() {
         <Link to="/agents"><strong>2 Agents</strong> science / creative / growth</Link>
         <Link to="/review"><strong>3 Review</strong> hard publish gate</Link>
         <Link to="/sales"><strong>4 Sales</strong> pipeline &amp; deal table</Link>
+      </div>
+
+      <div style={{ marginBottom: 16 }}>
+        <PublishPlatformOrder compact />
       </div>
 
       <div className="grid-4" style={{ marginBottom: 18 }}>

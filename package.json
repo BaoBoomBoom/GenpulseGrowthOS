@@ -1,0 +1,17 @@
+{
+  "name": "genpulse-growth-os",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run dev --prefix web",
+    "dev:api": "npm run start --prefix server",
+    "dev:all": "node scripts/dev-all.mjs",
+    "build": "npm run build --prefix web",
+    "start:api": "npm run start --prefix server"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.0",
+    "@vercel/edge-config": "^1.4.0",
+    "hono": "^4.8.3"
+  }
+}

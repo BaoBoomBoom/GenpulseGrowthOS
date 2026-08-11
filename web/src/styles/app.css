@@ -150,6 +150,59 @@ a {
   margin-bottom: 24px;
 }
 
+.save-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.save-bar .save-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.save-bar.save-ok .save-dot {
+  background: #2e7d32;
+}
+
+.save-bar.save-busy .save-dot {
+  background: #e6a23c;
+}
+
+.save-bar.save-error .save-dot {
+  background: #c62828;
+}
+
+.save-bar.save-offline .save-dot {
+  background: #757575;
+}
+
+.save-label {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  min-width: 7.5rem;
+}
+
+.save-backend {
+  font-size: 0.68rem;
+  color: var(--muted);
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.save-bar .btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
 .page-title {
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 2.4vw, 2.1rem);
@@ -1205,7 +1258,147 @@ a {
   color: #1b5e20;
 }
 
-/* Sales Tracking ‚Äî pipeline */
+/* Publish platform order */
+.publish-order {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 12px 14px;
+}
+
+.publish-order.compact {
+  padding: 10px 12px;
+}
+
+.publish-order-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.publish-order-title {
+  font-weight: 650;
+  font-size: 0.92rem;
+}
+
+.publish-order-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 4px;
+  align-items: center;
+}
+
+.publish-order-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.publish-order-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.publish-order-name {
+  font-weight: 650;
+  font-size: 0.86rem;
+}
+
+.publish-order-role {
+  font-size: 0.72rem;
+  color: var(--muted);
+  max-width: 9.5rem;
+}
+
+.publish-order-arrow {
+  color: var(--muted);
+  margin: 0 4px 0 8px;
+  font-weight: 600;
+}
+
+.publish-order.compact .publish-order-role {
+  display: none;
+}
+
+.platform-order-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.platform-order-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.platform-order-chip .n {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.65rem;
+}
+
+.badge.publish-rank {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  min-width: 1.4rem;
+  justify-content: center;
+}
+
+.chip-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.chip.active .chip-rank {
+  background: #fff;
+  color: var(--ink);
+}
+
+@media (max-width: 720px) {
+  .publish-order-arrow {
+    display: none;
+  }
+}
+
+/* Sales Tracking ù pipeline */
 .sales-filters {
   display: flex;
   flex-wrap: wrap;

@@ -1,4 +1,4 @@
-# Genpulse Phase 1 ù SQL
+# Genpulse Phase 1 ? SQL
 
 ## Apply
 
@@ -16,7 +16,8 @@ psql "$DATABASE_URL" -f sql/002_phase1_seed.sql
 |---|---|
 | `001_phase1_schema.sql` | Enums, 5 tables, FKs, triggers, indexes, dashboard view |
 | `003_phase0_review_sales.sql` | Review gate (`content_tasks`) + CRM skeleton |
-| `004_sales_tracking_deals.sql` | Expand `deals` to Sales Tracking sheet columns (Status ◊ Stage, channel, lost reason, Ö) |
+| `005_os_state_snapshot.sql` | Supabase snapshot table for Save / auto-persist (`os_state`) |
+
 
 
 ## Primary key chain

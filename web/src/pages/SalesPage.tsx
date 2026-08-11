@@ -65,6 +65,7 @@ export function SalesPage() {
     updateDeal,
     createDeal,
     deleteDeal,
+    saveNow,
   } = useStore();
   const [tab, setTab] = useState<"pipeline" | "table" | "leads" | "outreach">(
     "pipeline"
@@ -393,6 +394,7 @@ export function SalesPage() {
             editEnabled={editEnabled}
             onUpdate={updateDeal}
             onDelete={handleDeleteDeal}
+            onSave={() => void saveNow()}
           />
         </div>
       ) : null}
@@ -469,6 +471,7 @@ export function SalesPage() {
             editEnabled={editEnabled}
             onUpdate={updateDeal}
             onDelete={handleDeleteDeal}
+            onSave={() => void saveNow()}
           />
         </div>
       ) : null}
@@ -577,11 +580,13 @@ function DealDetail({
   editEnabled,
   onUpdate,
   onDelete,
+  onSave,
 }: {
   deal: Deal | null;
   editEnabled: boolean;
   onUpdate: (id: string, patch: Partial<Deal>) => void;
   onDelete: (id: string) => void;
+  onSave: () => void;
 }) {
   if (!deal) {
     return (
@@ -611,14 +616,24 @@ function DealDetail({
             {locked ? <span className="badge">Locked</span> : null}
           </div>
         </div>
-        <button
-          type="button"
-          className="btn secondary danger"
-          disabled={locked}
-          onClick={() => onDelete(deal.deal_id)}
-        >
-          Delete
-        </button>
+        <div className="chip-row">
+          <button
+            type="button"
+            className="btn"
+            disabled={locked}
+            onClick={onSave}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className="btn secondary danger"
+            disabled={locked}
+            onClick={() => onDelete(deal.deal_id)}
+          >
+            Delete
+          </button>
+        </div>
       </div>
       <div className="panel-body">
         <div className="deal-detail-grid">

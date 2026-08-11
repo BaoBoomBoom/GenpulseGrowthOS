@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { WeeklyFrequencyStats } from "../components/WeeklyFrequencyStats";
+import { PublishPlatformOrder } from "../components/PublishPlatformOrder";
 import { useStore } from "../store-context";
 import type { Weekday } from "../types";
+import { publishOrderRank } from "../types";
 
 const DAYS: Weekday[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const TIMES = ["09:00", "11:00", "12:00", "15:00", "18:00", "20:00"];
@@ -50,7 +52,11 @@ export function CalendarPage() {
     };
     for (const s of slots) map[s.day].push(s);
     for (const d of DAYS) {
-      map[d].sort((a, b) => a.time.localeCompare(b.time));
+      map[d].sort(
+        (a, b) =>
+          publishOrderRank(a.platform) - publishOrderRank(b.platform) ||
+          a.time.localeCompare(b.time)
+      );
     }
     return map;
   }, [slots]);
@@ -68,8 +74,8 @@ export function CalendarPage() {
           <p className="eyebrow">Work · Master Content Calendar</p>
           <h1 className="page-title">Content Calendar</h1>
           <p className="page-desc">
-            Week {weekKey} — who posts what, on which platform, and when. Pull rows from
-            Content Database; agents help create them, calendar makes them shippable.
+            Week {weekKey} — who posts what, on which platform, and when. Prefer
+            scheduling earlier platforms first (TikTok → Instagram → …).
           </p>
         </div>
         <div className="header-actions">
@@ -78,6 +84,10 @@ export function CalendarPage() {
           </Link>
         </div>
       </header>
+
+      <div style={{ marginBottom: 14 }}>
+        <PublishPlatformOrder compact />
+      </div>
 
       <WeeklyFrequencyStats />
 
@@ -158,6 +168,9 @@ export function CalendarPage() {
                     <div className="cal-time">{s.time}</div>
                     <div className="cal-title">{s.title}</div>
                     <div className="cal-meta">
+                      <span className="badge publish-rank">
+                        #{publishOrderRank(s.platform)}
+                      </span>
                       <span className="badge">{s.brand}</span>
                       <span className="badge">{s.platform}</span>
                     </div>

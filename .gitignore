@@ -14,6 +14,9 @@ build/
 .env.*
 !.env.example
 
+# Persisted OS state (local backend)
+data/os-store.json
+
 # Logs / cache
 logs/
 *.log

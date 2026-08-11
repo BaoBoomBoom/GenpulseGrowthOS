@@ -1,8 +1,14 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AgentChat } from "../components/AgentChat";
+import { PublishPlatformOrder } from "../components/PublishPlatformOrder";
 import { useStore } from "../store-context";
 import type { BrandId, Platform } from "../types";
+import {
+  PUBLISH_PLATFORM_ORDER,
+  publishOrderRank,
+  sortPlatformsByPublishOrder,
+} from "../types";
 
 export function CreativePage() {
   const {
@@ -36,12 +42,22 @@ export function CreativePage() {
     [creativeBriefs, brandFilter]
   );
   const latestBrief = briefs[0];
+  const platformChoices = sortPlatformsByPublishOrder(
+    profile?.platforms?.length
+      ? profile.platforms
+      : PUBLISH_PLATFORM_ORDER.filter((p) => p !== "Newsletter")
+  );
 
   function toggle(p: Platform) {
     setPlatforms((prev) =>
       prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]
     );
   }
+
+  const generated = [...content]
+    .filter((c) => brandFilter === "All" || c.brand === brandFilter)
+    .sort((a, b) => publishOrderRank(a.platform) - publishOrderRank(b.platform))
+    .slice(0, 12);
 
   return (
     <>
@@ -50,9 +66,17 @@ export function CreativePage() {
         <p className="page-desc">
           Not a caption machine. Locks brand personality, chooses format, sets creative
           direction and visual language, and decides how one theme performs across
-          platforms — the brain of style and expression.
+          platforms — in publish order.
         </p>
       </header>
+
+      <div style={{ marginTop: 14 }}>
+        <PublishPlatformOrder
+          platforms={platformChoices}
+          compact
+          title="生成 / 分发平台顺序"
+        />
+      </div>
 
       <div className="agent-layout" style={{ marginTop: 18 }}>
         <AgentChat
@@ -125,23 +149,16 @@ export function CreativePage() {
               ) : null}
 
               <div className="field" style={{ marginTop: 12 }}>
-                <label>Platforms</label>
+                <label>Platforms（按发布顺序编号）</label>
                 <div className="chip-row">
-                  {(
-                    [
-                      "TikTok",
-                      "Instagram",
-                      "X",
-                      "LinkedIn",
-                      "Pinterest",
-                    ] as Platform[]
-                  ).map((p) => (
+                  {platformChoices.map((p) => (
                     <button
                       key={p}
                       type="button"
                       className={`chip ${platforms.includes(p) ? "active" : ""}`}
                       onClick={() => toggle(p)}
                     >
+                      <span className="chip-rank">{publishOrderRank(p)}</span>
                       {p}
                     </button>
                   ))}
@@ -164,64 +181,66 @@ export function CreativePage() {
                   className="btn"
                   disabled={!topicId || !platforms.length}
                   onClick={() => {
-                    creativeGeneratePlatforms(topicId, platforms);
+                    creativeGeneratePlatforms(
+                      topicId,
+                      sortPlatformsByPublishOrder(platforms)
+                    );
                     navigate("/agents/creative");
                   }}
                 >
-                  Multi-platform rewrite
+                  Generate platform drafts
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="grid-2">
-            <div className="panel">
+          {latestBrief ? (
+            <div className="panel" style={{ marginBottom: 16 }}>
               <div className="panel-head">
-                <h2>Latest brief</h2>
+                <h2>Latest brief · {latestBrief.brand}</h2>
               </div>
               <div className="panel-body">
-                {latestBrief ? (
-                  <>
-                    <div style={{ fontWeight: 600 }}>
-                      {latestBrief.brand} · {latestBrief.format}
-                    </div>
-                    <p>{latestBrief.angle}</p>
-                    <div className="muted-sm">{latestBrief.visual_language}</div>
-                    <h3 className="h3-tight">Platform plays</h3>
-                    <ul>
-                      {Object.entries(latestBrief.platform_plays).map(([p, v]) => (
-                        <li key={p}>
-                          <strong>{p}</strong>: {v}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <div className="empty">No brief yet</div>
-                )}
+                <p>
+                  <strong>{latestBrief.format}</strong> — {latestBrief.angle}
+                </p>
+                <p className="muted-sm">{latestBrief.visual_language}</p>
               </div>
             </div>
+          ) : null}
 
-            <div className="panel">
-              <div className="panel-head">
-                <h2>Recent assets</h2>
-              </div>
-              <div className="panel-body" style={{ paddingTop: 8 }}>
-                {content.slice(0, 6).map((c) => (
-                  <div key={c.content_id} className="list-item" style={{ cursor: "default" }}>
-                    <div style={{ fontWeight: 600 }}>{c.title}</div>
-                    <div className="chip-row" style={{ marginTop: 6 }}>
-                      <span className="badge">{c.platform}</span>
-                      <span className={`badge ${c.status}`}>{c.status}</span>
-                    </div>
-                    {c.creative_direction ? (
-                      <div className="muted-sm" style={{ marginTop: 6 }}>
-                        {c.creative_direction}
-                      </div>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
+          <div className="panel">
+            <div className="panel-head">
+              <h2>Generated assets</h2>
+            </div>
+            <div className="panel-body" style={{ padding: 0 }}>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Platform</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {generated.map((c) => (
+                    <tr key={c.content_id}>
+                      <td>
+                        <span className="badge publish-rank">
+                          {publishOrderRank(c.platform)}
+                        </span>
+                      </td>
+                      <td>{c.title}</td>
+                      <td>{c.platform}</td>
+                      <td>
+                        <span className={`badge status-${c.status}`}>
+                          {c.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

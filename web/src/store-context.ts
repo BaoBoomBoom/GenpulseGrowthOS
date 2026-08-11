@@ -103,6 +103,12 @@ export interface Store {
   updateDeal: (dealId: string, patch: Partial<Deal>) => void;
   createDeal: (input?: Partial<Deal>) => Deal;
   deleteDeal: (dealId: string) => void;
+  /** Persistence */
+  saveStatus: "idle" | "loading" | "dirty" | "saving" | "saved" | "error" | "offline";
+  lastSavedAt: string | null;
+  backendOnline: boolean;
+  storageBackend: string | null;
+  saveNow: () => Promise<boolean>;
 }
 
 export const StoreContext = createContext<Store | null>(null);

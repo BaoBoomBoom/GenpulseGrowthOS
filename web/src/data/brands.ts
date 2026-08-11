@@ -3,7 +3,7 @@ import type { BrandProfile, PlatformPlan } from "../types";
 export const brandProfiles: BrandProfile[] = [
   {
     id: "CEO",
-    platforms: ["LinkedIn", "Instagram", "TikTok", "X"],
+    platforms: ["TikTok", "Instagram", "X", "LinkedIn"],
     audience: "Women, Family, Queer",
     tone: "Singapore biotech founder in SF. Funny. Explain biology using dating.",
     goal: "Brand Awareness",
@@ -15,7 +15,7 @@ export const brandProfiles: BrandProfile[] = [
   },
   {
     id: "CMO",
-    platforms: ["LinkedIn", "Instagram", "TikTok", "X"],
+    platforms: ["TikTok", "Instagram", "X", "LinkedIn"],
     audience: "Women, Family, Queer",
     tone: "China rich girl in NYC. Luxury aesthetic.",
     goal: "Brand Awareness",
@@ -27,7 +27,7 @@ export const brandProfiles: BrandProfile[] = [
   },
   {
     id: "Genpulse",
-    platforms: ["LinkedIn", "Instagram", "TikTok", "X", "Pinterest", "Newsletter"],
+    platforms: ["TikTok", "Instagram", "X", "LinkedIn", "Pinterest", "Newsletter"],
     audience: "Degen / biohackers / DeSci",
     tone: "AI hacker. Apple keynote mixed with crypto Twitter.",
     goal: "Downloads",
@@ -39,7 +39,7 @@ export const brandProfiles: BrandProfile[] = [
   },
   {
     id: "Lushair",
-    platforms: ["Instagram", "TikTok", "Pinterest"],
+    platforms: ["TikTok", "Instagram", "Pinterest"],
     audience: "Mass",
     tone: "Hair expert / dermatologist explaining hair science.",
     goal: "Sales",
@@ -50,7 +50,7 @@ export const brandProfiles: BrandProfile[] = [
   },
   {
     id: "Glamskin",
-    platforms: ["Instagram", "TikTok", "Pinterest"],
+    platforms: ["TikTok", "Instagram", "Pinterest"],
     audience: "Mass",
     tone: "Vogue Beauty meets Apple Design. Skin AI.",
     goal: "Sales",
@@ -61,7 +61,7 @@ export const brandProfiles: BrandProfile[] = [
   },
   {
     id: "Finegyno",
-    platforms: ["Instagram", "TikTok", "Pinterest"],
+    platforms: ["TikTok", "Instagram", "Pinterest"],
     audience: "Women",
     tone: "Women's best friend. Hormone AI.",
     goal: "Sales",
@@ -72,7 +72,7 @@ export const brandProfiles: BrandProfile[] = [
   },
   {
     id: "Dental",
-    platforms: ["Instagram", "TikTok", "Pinterest"],
+    platforms: ["TikTok", "Instagram", "Pinterest"],
     audience: "Family",
     tone: "Dental AI — clear, trustworthy, family-safe.",
     goal: "Sales",

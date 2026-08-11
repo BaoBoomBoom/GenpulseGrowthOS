@@ -9,6 +9,8 @@ import type {
   Platform,
   Weekday,
 } from "../types";
+import { PUBLISH_PLATFORM_ORDER, publishOrderRank } from "../types";
+import { PublishPlatformOrder } from "../components/PublishPlatformOrder";
 
 const emptyForm = {
   id: "",
@@ -44,6 +46,7 @@ export function DatabasePage() {
     updateDatabaseEntry,
     deleteDatabaseEntry,
     scheduleEntry,
+    saveNow,
   } = useStore();
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -116,6 +119,7 @@ export function DatabasePage() {
       addDatabaseEntry(payload);
     }
     resetForm();
+    void saveNow();
   }
 
   return (
@@ -126,7 +130,7 @@ export function DatabasePage() {
           <h1 className="page-title">Content Database</h1>
           <p className="page-desc">
             One row = one piece of content. Fill topic, hook, brand, platform, then schedule
-            it onto the calendar. Matches your Growth OS v2 sheet.
+            it onto the calendar. Pick platform by OS publish order (#1 TikTok first).
           </p>
         </div>
         <div className="header-actions">
@@ -145,6 +149,10 @@ export function DatabasePage() {
           </button>
         </div>
       </header>
+
+      <div style={{ marginBottom: 14 }}>
+        <PublishPlatformOrder compact showLink={false} title="录入时的平台顺序" />
+      </div>
 
       <div className="howto-strip">
         <div><strong>1</strong> Enter topic + hook</div>
@@ -222,18 +230,16 @@ export function DatabasePage() {
                   </select>
                 </div>
                 <div className="field">
-                  <label>Platform</label>
+                  <label>Platform（发布顺序）</label>
                   <select
                     value={form.platform}
                     onChange={(e) => setField("platform", e.target.value as Platform)}
                   >
-                    {["TikTok", "Instagram", "X", "LinkedIn", "Pinterest", "Newsletter"].map(
-                      (p) => (
-                        <option key={p} value={p}>
-                          {p}
-                        </option>
-                      )
-                    )}
+                    {PUBLISH_PLATFORM_ORDER.map((p) => (
+                      <option key={p} value={p}>
+                        #{publishOrderRank(p)} {p}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="field">
