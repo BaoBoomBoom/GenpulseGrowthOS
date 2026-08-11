@@ -37,12 +37,12 @@ export const PUBLISH_PLATFORM_ORDER: Platform[] = [
 ];
 
 export const PUBLISH_PLATFORM_ROLE: Record<Platform, string> = {
-  TikTok: "????? ∑ ??",
-  Instagram: "???? ∑ ??",
-  X: "???? ∑ ????",
-  LinkedIn: "???? ∑ B2B",
-  Pinterest: "???? ∑ ??",
-  Newsletter: "???? ∑ ??",
+  TikTok: "????? ù ??",
+  Instagram: "???? ù ??",
+  X: "???? ù ????",
+  LinkedIn: "???? ù B2B",
+  Pinterest: "???? ù ??",
+  Newsletter: "???? ù ??",
 };
 
 export function publishOrderRank(platform: Platform): number {
@@ -385,6 +385,16 @@ export interface Deal {
   organization: string;
   contact_person?: string | null;
   contact_on?: DealContactOn | string | null;
+  /** Phone / email / WeChat ID etc. */
+  contact_info?: string | null;
+  city?: string | null;
+  address?: string | null;
+  /** ISO date of last outreach / meeting */
+  last_contacted_on?: string | null;
+  /** Blockers that prevent recommendation / next step */
+  recommendation_blocker?: string | null;
+  /** Expected next reachable / talk window (free text or datetime) */
+  expected_talk_at?: string | null;
   owner: string;
   status: DealStatus;
   stage: DealStage;

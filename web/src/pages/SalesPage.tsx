@@ -104,6 +104,11 @@ export function SalesPage() {
         d.title,
         d.organization,
         d.contact_person,
+        d.contact_info,
+        d.city,
+        d.address,
+        d.recommendation_blocker,
+        d.expected_talk_at,
         d.channel,
         d.lost_reason,
         d.product_name,
@@ -410,6 +415,12 @@ export function SalesPage() {
                     <th>Value</th>
                     <th>Organization</th>
                     <th>Contact</th>
+                    <th>联系方式</th>
+                    <th>所在城市</th>
+                    <th>地址</th>
+                    <th>最近一次联系</th>
+                    <th>推荐阻碍</th>
+                    <th>预计可沟通时间</th>
                     <th>Owner</th>
                     <th>Status</th>
                     <th>Stage</th>
@@ -448,6 +459,16 @@ export function SalesPage() {
                           <span className="muted-sm"> · {d.contact_on}</span>
                         ) : null}
                       </td>
+                      <td>{d.contact_info || "—"}</td>
+                      <td>{d.city || "—"}</td>
+                      <td className="muted-sm" style={{ maxWidth: 180 }}>
+                        {d.address || "—"}
+                      </td>
+                      <td className="mono">{d.last_contacted_on || "—"}</td>
+                      <td className="muted-sm" style={{ maxWidth: 160 }}>
+                        {d.recommendation_blocker || "—"}
+                      </td>
+                      <td>{d.expected_talk_at || "—"}</td>
                       <td>{d.owner}</td>
                       <td>
                         <span className={`badge ${statusClass(d.status)}`}>
@@ -676,6 +697,68 @@ function DealDetail({
                 </option>
               ))}
             </select>
+          </label>
+          <label className="span-2">
+            联系方式
+            <input
+              disabled={locked}
+              value={deal.contact_info || ""}
+              onChange={(e) =>
+                patch({ contact_info: e.target.value || null })
+              }
+              placeholder="Phone / Email / WeChat ID…"
+            />
+          </label>
+          <label>
+            所在城市
+            <input
+              disabled={locked}
+              value={deal.city || ""}
+              onChange={(e) => patch({ city: e.target.value || null })}
+              placeholder="Shanghai / NYC…"
+            />
+          </label>
+          <label>
+            最近一次联系
+            <input
+              disabled={locked}
+              type="date"
+              value={deal.last_contacted_on || ""}
+              onChange={(e) =>
+                patch({ last_contacted_on: e.target.value || null })
+              }
+            />
+          </label>
+          <label className="span-2">
+            地址
+            <input
+              disabled={locked}
+              value={deal.address || ""}
+              onChange={(e) => patch({ address: e.target.value || null })}
+              placeholder="Street / building / suite…"
+            />
+          </label>
+          <label className="span-2">
+            推荐阻碍
+            <input
+              disabled={locked}
+              value={deal.recommendation_blocker || ""}
+              onChange={(e) =>
+                patch({ recommendation_blocker: e.target.value || null })
+              }
+              placeholder="Budget / timing / competitor / no champion…"
+            />
+          </label>
+          <label className="span-2">
+            预计可沟通时间
+            <input
+              disabled={locked}
+              value={deal.expected_talk_at || ""}
+              onChange={(e) =>
+                patch({ expected_talk_at: e.target.value || null })
+              }
+              placeholder="e.g. 2026-08-15 14:00 or Next Tue AM"
+            />
           </label>
           <label>
             Owner
