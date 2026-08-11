@@ -1,6 +1,7 @@
 -- =============================================================================
 -- OS editable-state snapshot (for Vercel + Supabase persistence)
 -- Run in Supabase SQL Editor after linking the project.
+-- Paste THIS FILE'S CONTENTS into SQL Editor (not the file path).
 -- =============================================================================
 
 BEGIN;
@@ -12,7 +13,7 @@ CREATE TABLE IF NOT EXISTS os_state (
 );
 
 COMMENT ON TABLE os_state IS
-  'Full Genpulse Growth OS editable snapshot (deals, content DB, review tasks, …)';
+  'Full Genpulse Growth OS editable snapshot (deals, content DB, review tasks)';
 
 ALTER TABLE os_state ENABLE ROW LEVEL SECURITY;
 
