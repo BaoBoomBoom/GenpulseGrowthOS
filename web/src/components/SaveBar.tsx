@@ -6,15 +6,15 @@ export function SaveBar() {
 
   const label =
     saveStatus === "loading"
-      ? "Loading…"
+      ? "Loadingâ€¦"
       : saveStatus === "saving"
-        ? "Saving…"
+        ? "Savingâ€¦"
         : saveStatus === "dirty"
           ? "Unsaved"
           : saveStatus === "error"
             ? "Save failed"
             : saveStatus === "offline"
-              ? "Offline · local only"
+              ? "Offline Â· local only"
               : lastSavedAt
                 ? `Saved ${new Date(lastSavedAt).toLocaleTimeString()}`
                 : "Saved";

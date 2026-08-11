@@ -10,7 +10,7 @@ export function PublishPlatformOrder({
   platforms,
   compact = false,
   showLink = true,
-  title = "??????",
+  title = "发布平台顺序",
 }: {
   /** Brand-specific subset; defaults to OS-wide order */
   platforms?: Platform[];
@@ -29,7 +29,7 @@ export function PublishPlatformOrder({
           <div className="publish-order-title">{title}</div>
           {!compact ? (
             <div className="muted-sm">
-              ?????????????????????/??/??
+              同一主题按序号分发：先验证，再沉淀，再专业/长尾/私域
             </div>
           ) : null}
         </div>
@@ -49,7 +49,7 @@ export function PublishPlatformOrder({
             ) : null}
             {idx < ordered.length - 1 ? (
               <span className="publish-order-arrow" aria-hidden>
-                ?
+                →
               </span>
             ) : null}
           </li>

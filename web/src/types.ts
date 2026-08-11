@@ -37,12 +37,12 @@ export const PUBLISH_PLATFORM_ORDER: Platform[] = [
 ];
 
 export const PUBLISH_PLATFORM_ROLE: Record<Platform, string> = {
-  TikTok: "????? � ??",
-  Instagram: "???? � ??",
-  X: "???? � ????",
-  LinkedIn: "???? � B2B",
-  Pinterest: "???? � ??",
-  Newsletter: "???? � ??",
+  TikTok: "短视频验证 · 拉新",
+  Instagram: "视觉沉淀 · 转化",
+  X: "实时讨论 · 二次分发",
+  LinkedIn: "专业信任 · B2B",
+  Pinterest: "长尾搜索 · 发现",
+  Newsletter: "私域沉淀 · 复购",
 };
 
 export function publishOrderRank(platform: Platform): number {
